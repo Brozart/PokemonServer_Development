@@ -2,7 +2,7 @@ version: '2.4'
 services:
   db:
     build: ./db
-    image: mysql:5.7.22
+    image: mariadb
     environment:
     - MYSQL_ALLOW_EMPTY_PASSWORD=1
     ports:
