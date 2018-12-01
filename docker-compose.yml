@@ -1,6 +1,7 @@
-version: '2.4'
+version: '3.7'
 services:
   db:
+    container_name: db
     build: ./db
     image: mariadb
     environment:
@@ -9,3 +10,14 @@ services:
     - 3306:3306
     volumes:
     - ./db/initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: mysql --user=root -e 'SELECT 1'
+  authorization:
+    container_name: authorization
+    image: docker.io/br0z4rt/authorization
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db/authorization
